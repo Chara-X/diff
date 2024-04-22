@@ -1,11 +1,11 @@
 package diff
 
 import (
-	"github.com/Chara-X/enumerable"
+	"github.com/Chara-X/slices"
 )
 
 func Diff[T comparable](from, to []T) []Change[T] {
-	return enumerable.Reverse(diff(from, to, 0, 0, 0, map[[2]int][]Change[T]{}))
+	return slices.Reverse(diff(from, to, 0, 0, 0, map[[2]int][]Change[T]{}))
 }
 func diff[T comparable](from, to []T, i, j, offset int, cache map[[2]int][]Change[T]) []Change[T] {
 	var changes []Change[T]
@@ -28,7 +28,7 @@ func diff[T comparable](from, to []T, i, j, offset int, cache map[[2]int][]Chang
 		cache[[2]int{i, j}] = diff(from, to, i+1, j+1, offset, cache)
 	} else {
 		var options = [][]Change[T]{diff(from, to, i, j+1, offset+1, cache), diff(from, to, i+1, j, offset-1, cache), diff(from, to, i+1, j+1, offset, cache)}
-		var index = enumerable.MinBy(options, func(e []Change[T]) int { return len(e) }, func(i int, e []Change[T]) int { return i })
+		var index = slices.MinBy(options, func(e []Change[T]) int { return len(e) }, func(i int, e []Change[T]) int { return i })
 		cache[[2]int{i, j}] = append(options[index], Change[T]{Kind: index, Position: offset + i, From: from[i], To: to[j]})
 	}
 	return cache[[2]int{i, j}]
