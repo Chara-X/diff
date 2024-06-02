@@ -1,8 +1,6 @@
 package diff
 
-import (
-	"github.com/Chara-X/slices"
-)
+import "github.com/Chara-X/util/slices"
 
 func Diff[T comparable](from, to []T) []Change[T] {
 	return slices.Reverse(diff(from, to, 0, 0, 0, map[[2]int][]Change[T]{}))
