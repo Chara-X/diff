@@ -4,6 +4,6 @@
 diff ./A.txt ./B.txt
 ```
 
-## References
+## Reference
 
 [Edit Distance](https://leetcode.com/problems/edit-distance)
